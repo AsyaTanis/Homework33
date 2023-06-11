@@ -1,0 +1,30 @@
+###
+GET http://localhost:8080/employee/salary/higher
+
+###
+DELETE http://localhost:8080/employee/deleteBy{id}
+
+###
+GET http://localhost:8080/employee/getBy{id}
+
+###
+PUT http://localhost:8080/employee/update/{id}
+
+###
+POST http://localhost:8080/employee/add
+
+###
+GET http://localhost:8080/employee/salary/higherThenAvg
+
+###
+GET http://localhost:8080/employee/salary/max
+
+###
+GET http://localhost:8080/employee/salary/min
+
+###
+GET http://localhost:8080/employee/salary/sum
+
+###
+GET http://localhost:8080/employee/salary/all
+
