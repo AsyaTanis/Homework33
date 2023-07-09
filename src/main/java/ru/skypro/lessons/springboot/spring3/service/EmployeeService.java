@@ -1,29 +1,40 @@
 package ru.skypro.lessons.springboot.spring3.service;
 
-import ru.skypro.lessons.springboot.spring3.Employee;
+import org.springframework.web.multipart.MultipartFile;
+import ru.skypro.lessons.springboot.spring3.model.Employee;
+import ru.skypro.lessons.springboot.spring3.DTO.EmployeeDTO;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 public interface EmployeeService {
 
-    List<Employee> getAllEmployees();
+    List<EmployeeDTO> getAllEmployees();
 
     Integer getSalarySum();
 
-    Employee getMinSalary();
+    Optional<Integer> getMinSalary();
 
-    Employee getMaxSalary();
+    Optional<Integer> getMaxSalary();
 
-    List<Employee> getAllEmployeesWithSalaryHigherThenAvg();
+    List<EmployeeDTO> getAllEmployeesWithSalaryHigherThenAvg();
 
-    List<Employee> addEmployee(Employee employee);
+    void addEmployee(Employee employee);
 
-    List<Employee> updateEmployee(Employee employee, int id);
+    void updateEmployee(Employee employee);
 
-    List<Employee> getEmployeeById(int id);
+    List<EmployeeDTO>  getEmployeeById(Integer id);
 
-    List<Employee> deleteEmployeeById(int id);
+    void deleteEmployeeById(Integer id);
 
-    List<Employee> getAllEmployeesWithSalaryHigherThan(int salary);
+    List<EmployeeDTO> getAllEmployeesWithSalaryHigherThan(int salary);
+
+    List<EmployeeDTO> getAllEmployeesWithMatchingPosition(String position);
+
+    List<EmployeeDTO> getEmployeeFullInfo(int id);
+
+    List<EmployeeDTO> getEmployeesInPageFormat(int page);
+
+    void saveEmployeeFromJson(MultipartFile file) throws IOException;
 }

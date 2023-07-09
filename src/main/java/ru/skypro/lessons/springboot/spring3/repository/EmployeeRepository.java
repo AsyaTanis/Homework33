@@ -1,30 +1,49 @@
 package ru.skypro.lessons.springboot.spring3.repository;
 
-import ru.skypro.lessons.springboot.spring3.Employee;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import ru.skypro.lessons.springboot.spring3.DTO.ReportDTO;
+import ru.skypro.lessons.springboot.spring3.model.Employee;
+import ru.skypro.lessons.springboot.spring3.model.Report;
+
+import java.util.List;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface EmployeeRepository {
+public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
 
+    @Query(value = "SELECT * FROM employee",
+            nativeQuery = true)
     List<Employee> getAllEmployees();
 
+    @Query(value = "SELECT SUM(salary) " +
+            "FROM employee",
+            nativeQuery = true)
     Integer getSalarySum();
 
-    Employee getMinSalary();
+    @Query(value = "SELECT MIN(salary) " +
+            "FROM employee",nativeQuery = true)
+    Optional<Integer> getMinSalary();
 
-    Employee getMaxSalary();
+    @Query(value = "SELECT MAX(salary) " +
+            "FROM employee",nativeQuery = true)
+    Optional<Integer> getMaxSalary();
 
+    @Query(value = "SELECT * FROM employee " +
+            "WHERE salary >(SELECT AVG (salary) FROM employee)",
+            nativeQuery = true)
     List<Employee> getAllEmployeesWithSalaryHigherThenAvg();
 
-    List<Employee> addEmployee(Employee employee);
+    @Query(value = "SELECT * FROM employee "+
+            "WHERE salary > :salary",
+            nativeQuery = true)
+    List<Employee> getAllEmployeesWithSalaryHigherThan(@Param("salary") int salary);
 
-    List<Employee> updateEmployee(Employee employee, int id);
-
-    List<Employee> getEmployeeById(int id);
-
-    List<Employee> deleteEmployeeById(int id);
-
-    List<Employee> getAllEmployeesWithSalaryHigherThan(int salary);
-
+    @Query(value = "SELECT employee.id, employee.name, employee.salary, employee.position_id FROM employee "+
+            "INNER JOIN position " +
+            "ON employee.position_id = position.id and position.name = :name",
+            nativeQuery = true)
+    List<Employee> getAllEmployeesWithMatchingPosition(@Param("name") String name);
 }
