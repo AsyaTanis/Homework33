@@ -74,13 +74,21 @@ public class EmployeeControler {
     public List<EmployeeDTO> getAllEmployeesWithSalaryHigherThan(@RequestParam("salary") int salary) {
         return employeeService.getAllEmployeesWithSalaryHigherThan(salary);
     }
-
+/*
     @GetMapping("/position")
     public List<EmployeeDTO> getAllEmployeesWithMatchingPosition(@RequestParam("position") String position) {
 
         return employeeService.getAllEmployeesWithMatchingPosition(position);
-    }
+    }*/
 
+    @GetMapping
+    public List<EmployeeDTO> getAllEmployeesWithMatchingPosition(@RequestParam(required = false) String position) {
+        return employeeService.getAllEmployeesWithMatchingPosition(
+                Optional.ofNullable(position)
+                        .filter(pos -> !pos.isEmpty())
+                        .orElse(null)
+        );
+    }
     @GetMapping("/fullInfo{id}")
     public List<EmployeeDTO> getEmployeeFullInfo(@PathVariable int id) {
 
