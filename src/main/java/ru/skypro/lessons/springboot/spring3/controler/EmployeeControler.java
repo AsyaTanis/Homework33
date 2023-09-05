@@ -81,13 +81,13 @@ public class EmployeeControler {
         return employeeService.getAllEmployeesWithMatchingPosition(position);
     }*/
 
-    @GetMapping
+    @GetMapping("/position")
     public List<EmployeeDTO> getAllEmployeesWithMatchingPosition(@RequestParam(required = false) String position) {
-        return employeeService.getAllEmployeesWithMatchingPosition(
-                Optional.ofNullable(position)
-                        .filter(pos -> !pos.isEmpty())
-                        .orElse(null)
-        );
+        if (position != null) {
+            return employeeService.getAllEmployeesWithMatchingPosition(position);
+        } else {
+            return employeeService.getAllEmployees();
+        }
     }
     @GetMapping("/fullInfo{id}")
     public List<EmployeeDTO> getEmployeeFullInfo(@PathVariable int id) {
